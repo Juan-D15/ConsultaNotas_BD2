@@ -1,0 +1,32 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portal de Notas — Bienvenido</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+  <main class="center-screen">
+    <section class="card home-split">
+      <div class="home-left">
+        <h1 class="home-title">BIENVENIDO</h1>
+        <p class="home-sub">Portal de control de notas con diseño minimalista y moderno.</p>
+        <div style="height:18px"></div>
+        <a class="btn" href="{% url 'notas' %}">INGRESAR AL PORTAL</a>
+        <p class="helper">No se requieren credenciales. Pulsa para continuar.</p>
+      </div>
+      <div class="home-right">
+        <div class="home-accent"></div>
+        <h2 style="font-size:28px; font-weight:800; margin-bottom:6px;">¡Hola de nuevo!</h2>
+        <p style="color:var(--muted); max-width:40ch; margin-inline:auto">
+          Visualiza las notas por bimestre con una interfaz clara y rápida.
+        </p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

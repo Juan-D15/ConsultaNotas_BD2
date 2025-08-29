@@ -1,0 +1,109 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Control de Notas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+{# agregamos clases según parámetros para activar animaciones y filtro #}
+<body class="{% if curso_id %}has-course{% endif %}">
+  <header class="header">
+    <div class="container header-inner">
+      <span class="logo-dot" aria-hidden="true"></span>
+      <div class="app-title">CONTROL DE NOTAS</div>
+    </div>
+  </header>
+
+  <main class="container stage">
+    <!-- Selector de curso -->
+    <section class="selector-wrap">
+      <div class="select">
+        <label for="curso">Seleccione un curso</label>
+        <select id="curso" class="course">
+          <option value="">— Seleccionar —</option>
+          {% for c in cursos %}
+            <option value="{{ c.CursoID }}" {% if c.CursoID == curso_id %}selected{% endif %}>
+              {{ c.NombreCurso }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    </section>
+
+    <!-- Tabla + Filtro -->
+    <section class="table-wrap {% if bimestre %}b{{ bimestre }}{% endif %}" id="tabla-seccion" aria-live="polite">
+      <div class="table-headbar">
+        <h2 class="table-title" id="titulo-curso">
+          {% if curso_nombre %}Vista para curso {{ curso_nombre }}{% else %}Selecciona un curso para ver la tabla{% endif %}
+        </h2>
+
+        <div class="select select-inline filter-area">
+          <label class="sr-only" for="bimestre">Filtrar por Bimestre</label>
+          <select id="bimestre" class="course" {% if not curso_id %}disabled{% endif %}>
+            <option value="">Filtrar por Bimestre</option>
+            <option value="1" {% if bimestre == 1 %}selected{% endif %}>Bimestre I</option>
+            <option value="2" {% if bimestre == 2 %}selected{% endif %}>Bimestre II</option>
+            <option value="3" {% if bimestre == 3 %}selected{% endif %}>Bimestre III</option>
+            <option value="4" {% if bimestre == 4 %}selected{% endif %}>Bimestre IV</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table id="tabla-notas">
+          <thead>
+            <tr>
+              <th>NOMBRE</th>
+              <th>I</th>
+              <th>II</th>
+              <th>III</th>
+              <th>IV</th>
+              <th>PROMEDIO</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-notas">
+            {% for f in filas %}
+              <tr>
+                <td>{{ f.Nombre }}</td>
+                <td>{{ f.I|default_if_none:"" }}</td>
+                <td>{{ f.II|default_if_none:"" }}</td>
+                <td>{{ f.III|default_if_none:"" }}</td>
+                <td>{{ f.IV|default_if_none:"" }}</td>
+                <td><span class="badge">{{ f.Promedio }}</span></td>
+              </tr>
+            {% empty %}
+              {% if curso_id %}
+                <tr><td colspan="6" style="color:var(--muted); padding:18px 16px">No hay notas para este curso.</td></tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- JS corto: redirecciones GET para curso y bimestre -->
+  <script>
+    const cursoSel = document.getElementById('curso');
+    const bimSel   = document.getElementById('bimestre');
+
+    function go(qs){
+      const url = new URL(window.location.href);
+      Object.entries(qs).forEach(([k,v]) => v ? url.searchParams.set(k, v) : url.searchParams.delete(k));
+      window.location = url.toString();
+    }
+
+    cursoSel.addEventListener('change', () => {
+      go({ curso: cursoSel.value, bimestre: '' }); // reset bimestre
+    });
+
+    bimSel?.addEventListener('change', () => {
+      go({ curso: cursoSel.value, bimestre: bimSel.value });
+    });
+  </script>
+</body>
+</html>
