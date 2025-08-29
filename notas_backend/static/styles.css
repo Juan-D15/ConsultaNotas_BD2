@@ -1,0 +1,241 @@
+/* ========== Tokens de diseño (modo oscuro azul/teal) ========== */
+:root{
+  --bg-1:#0b1220;
+  --bg-2:#0e1628;
+  --panel-1:#111a2e;
+  --panel-2:#131c31;
+  --stroke:#1e2a45;
+  --text:#eaf2ff;
+  --muted:#a9b7d1;
+  --accent-1:#12d6d0;
+  --accent-2:#35f2e8;
+  --radius:16px;
+  --shadow-lg:0 20px 50px rgba(0,0,0,.6);
+  --glow:0 0 0 1px rgba(18,214,208,.25), 0 0 40px rgba(18,214,208,.15);
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+
+/* Reset mínimo + tipografías */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(53,242,232,.08), transparent 60%),
+    radial-gradient(800px 600px at -10% 90%, rgba(18,214,208,.06), transparent 60%),
+    linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol";
+  line-height:1.4;
+}
+
+/* Utils */
+.container{width:min(1200px, 92vw); margin-inline:auto}
+.center-screen{
+  min-height:100dvh; display:grid; place-items:center; padding:28px;
+}
+.card{
+  width:min(980px, 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,.02), transparent) , linear-gradient(180deg, var(--panel-1), var(--panel-2));
+  border:1px solid var(--stroke);
+  border-radius:calc(var(--radius) + 6px);
+  box-shadow:var(--shadow-lg), var(--glow);
+  position:relative; overflow:hidden;
+}
+
+/* ---- HOME ---- */
+.home-split{
+  display:grid; grid-template-columns: 1fr 1fr; min-height:460px;
+}
+.home-left{padding:48px 44px 56px}
+.home-right{
+  position:relative; isolation:isolate; padding:48px 44px 56px;
+  display:grid; place-content:center; text-align:center;
+}
+.home-accent{
+  position:absolute; inset:0; z-index:-1;
+  background: linear-gradient(135deg, transparent 18%, rgba(18,214,208,.12) 18%, rgba(53,242,232,.12) 48%, transparent 48%),
+              radial-gradient(540px 320px at 60% 35%, rgba(18,214,208,.18), transparent 60%);
+  filter:drop-shadow(0 0 20px rgba(18,214,208,.2));
+}
+h1,h2{margin:0 0 10px; font-family: Manrope, Inter, system-ui, sans-serif}
+.home-title{font-size:34px; font-weight:800; letter-spacing:.5px}
+.home-sub{color:var(--muted); margin-top:6px; font-size:14px}
+.label{font-size:13px; color:var(--muted); margin-bottom:6px}
+.input{
+  width:100%; padding:14px 16px; border-radius:12px; color:var(--text);
+  background:linear-gradient(180deg, rgba(255,255,255,.02), transparent), #0e172a;
+  border:1px solid var(--stroke);
+  outline:none; box-shadow:inset 0 0 0 1px transparent; transition:border .2s var(--ease), box-shadow .2s var(--ease);
+}
+.input:focus{border-color:rgba(53,242,232,.6); box-shadow:0 0 0 3px rgba(53,242,232,.12)}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:14px 22px; border-radius:999px; border:1px solid rgba(0,0,0,.35);
+  background:linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color:#0b1220; font-weight:700; text-decoration:none;
+  box-shadow:inset 0 -2px 0 rgba(255,255,255,.3), 0 10px 22px rgba(0,0,0,.5), 0 0 40px rgba(18,214,208,.25);
+  transition: transform .15s var(--ease), box-shadow .2s var(--ease), filter .2s var(--ease);
+}
+.btn:hover{transform:translateY(-1px); filter:saturate(1.05)}
+.btn:active{transform:translateY(0)}
+.helper{font-size:12px; color:var(--muted); margin-top:10px}
+
+/* Responsivo home */
+@media (max-width:900px){
+  .home-split{grid-template-columns: 1fr}
+  .home-right{min-height:220px}
+}
+
+/* ---- NOTAS ---- */
+.header{
+  position:sticky; top:0; z-index:20; backdrop-filter:saturate(1.1) blur(6px);
+}
+.header-inner{
+  display:flex; align-items:center; gap:16px;
+  padding:20px 0;
+}
+.logo-dot{
+  width:12px; height:12px; border-radius:50%;
+  background:linear-gradient(135deg, var(--accent-2), var(--accent-1));
+  box-shadow:0 0 22px rgba(53,242,232,.6);
+}
+.app-title{font-family:Manrope, Inter; font-weight:800; letter-spacing:.6px}
+
+/* selector + animación */
+.stage{min-height:100dvh; padding:20px 0 64px}
+.selector-wrap{
+  display:grid; place-items:center; margin-top:12vh; margin-bottom:24px;
+  transition: transform .55s var(--ease), margin .55s var(--ease), opacity .55s var(--ease);
+}
+.select{
+  width:min(560px, 92vw);
+  position:relative;
+}
+.select label{display:block; margin-bottom:8px; color:var(--muted)}
+select.course{
+  width:100%;
+  padding:16px 48px 16px 16px;
+  border-radius:14px; color:var(--text);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)) ,
+    #0d1730;
+  border:1px solid var(--stroke);
+  appearance:none; outline:none;
+  box-shadow:var(--glow);
+  transition:border .25s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease);
+}
+select.course:focus{border-color:rgba(53,242,232,.6); box-shadow:0 0 0 3px rgba(53,242,232,.12), var(--glow)}
+.select::after{
+  content:"";
+  position:absolute; right:16px; top:50%; translate:0 -50%;
+  width:12px; height:12px; pointer-events:none;
+  background:
+    linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  clip-path: polygon(50% 75%, 0 25%, 100% 25%);
+  filter:drop-shadow(0 0 6px rgba(53,242,232,.6));
+}
+
+/* Tabla */
+.table-wrap{
+  width:min(1100px, 96vw);
+  margin-inline:auto;
+  background: linear-gradient(180deg, rgba(255,255,255,.02), transparent), linear-gradient(180deg, var(--panel-1), var(--panel-2));
+  border:1px solid var(--stroke);
+  border-radius: var(--radius);
+  box-shadow:var(--shadow-lg), var(--glow);
+  padding:10px 6px;
+  opacity:0; transform: translateY(16px) scale(.985);
+  transition: opacity .55s var(--ease), transform .55s var(--ease);
+}
+.table-title{
+  font-family:Manrope, Inter; font-weight:800; letter-spacing:.3px;
+  padding:14px 18px; color:var(--text);
+}
+.table-scroll{overflow:auto}
+table{
+  width:100%; border-collapse:separate; border-spacing:0;
+  min-width:720px;
+}
+thead th{
+  position:sticky; top:0; z-index:1;
+  background:#0e172a;
+  padding:14px 16px; text-align:left; font-weight:700; font-family:Manrope, Inter;
+  border-bottom:1px solid var(--stroke);
+}
+tbody td{
+  padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.04);
+}
+tbody tr:nth-child(even) td{background:rgba(255,255,255,.015)}
+tbody tr:hover td{background:rgba(18,214,208,.06)}
+td:first-child{font-weight:600}
+.badge{
+  display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px;
+  background:rgba(18,214,208,.16); color:#bffafa; border:1px solid rgba(18,214,208,.35)
+}
+
+/* Estado cuando ya hay curso seleccionado */
+.has-course .selector-wrap{
+  margin-top:0; margin-bottom:14px;
+  transform: translateY(-26px) scale(.98);
+}
+.has-course .table-wrap{opacity:1; transform: translateY(0) scale(1)}
+
+/* Responsivo tabla */
+@media (max-width:720px){
+  .table-title{font-size:16px}
+}
+
+/* ===== Filtro por Bimestre (UI) ===== */
+.table-headbar{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:14px 12px 0 12px;
+}
+.filter-area{ display:none; }
+.has-course .filter-area{ display:block; } /* solo aparece cuando hay curso */
+.select-inline select.course{
+  min-width:240px; padding:12px 40px 12px 14px; border-radius:12px;
+}
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* ===== Mostrar solo el bimestre seleccionado ===== */
+/* Columnas (1:NOMBRE, 2:I, 3:II, 4:III, 5:IV, 6:PROMEDIO) */
+/* Bimestre I → ocultar II, III, IV */
+.table-wrap.b1 table th:nth-child(3),
+.table-wrap.b1 table td:nth-child(3),
+.table-wrap.b1 table th:nth-child(4),
+.table-wrap.b1 table td:nth-child(4),
+.table-wrap.b1 table th:nth-child(5),
+.table-wrap.b1 table td:nth-child(5){ display:none; }
+
+/* Bimestre II → ocultar I, III, IV */
+.table-wrap.b2 table th:nth-child(2),
+.table-wrap.b2 table td:nth-child(2),
+.table-wrap.b2 table th:nth-child(4),
+.table-wrap.b2 table td:nth-child(4),
+.table-wrap.b2 table th:nth-child(5),
+.table-wrap.b2 table td:nth-child(5){ display:none; }
+
+/* Bimestre III → ocultar I, II, IV */
+.table-wrap.b3 table th:nth-child(2),
+.table-wrap.b3 table td:nth-child(2),
+.table-wrap.b3 table th:nth-child(3),
+.table-wrap.b3 table td:nth-child(3),
+.table-wrap.b3 table th:nth-child(5),
+.table-wrap.b3 table td:nth-child(5){ display:none; }
+
+/* Bimestre IV → ocultar I, II, III */
+.table-wrap.b4 table th:nth-child(2),
+.table-wrap.b4 table td:nth-child(2),
+.table-wrap.b4 table th:nth-child(3),
+.table-wrap.b4 table td:nth-child(3),
+.table-wrap.b4 table th:nth-child(4),
+.table-wrap.b4 table td:nth-child(4){ display:none; }
+
+/* Responsive: el select de filtro ocupa todo el ancho en pantallas pequeñas */
+@media (max-width:720px){
+  .table-headbar{flex-direction:column; align-items:flex-start; gap:10px}
+  .select-inline select.course{min-width:100%; width:100%}
+}
